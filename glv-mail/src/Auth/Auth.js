@@ -1,12 +1,11 @@
-import {init, signIn, signOut} from './AuthLogic';
+import {init, signIn, signOut, isSignedIn, redirect} from './AuthLogic';
 import React from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button} from "react-bootstrap";
 
 class Auth extends React.Component {
-    constructor(props) {
-        super(props);
+    componentDidMount() {
         init();
     }
 
@@ -14,7 +13,8 @@ class Auth extends React.Component {
         return(
             <div>
                 <Button variant="outline-dark" onClick={signIn}>Sign in with Google</Button>
-                <Button variant="outline-light" onClick={signOut}>Sign out</Button>
+                <Button variant="outline-primary" onClick={signOut}>Sign out</Button>
+                <Button variant="outline-primary" onClick={isSignedIn}>Check</Button>
             </div>
         );
     }
