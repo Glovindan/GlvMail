@@ -14,7 +14,7 @@ const loadAPI = async () => {
                 'scope': SCOPES
             }).then(
                 () => {
-                    res("OK");
+                    res("API is loaded and initialized. Welcome!");
                 },
                 (err) => rej(err)
             )
@@ -32,12 +32,11 @@ const signIn = async () => {
 const signOut = async() => {
     const googleAuth = GAPI.auth2.getAuthInstance();
     return new Promise(res => {
-        googleAuth.signOut().then(() => res("signed out"));
+        googleAuth.signOut().then(() => res(true));
     })
 }
 
 const isSignedIn = () => {
-    console.log(GAPI.auth2.getAuthInstance().isSignedIn.get());
     return  GAPI.auth2.getAuthInstance().isSignedIn.get()
 }
 

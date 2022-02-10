@@ -26,14 +26,14 @@ class Auth extends React.Component {
 
     handleLogInClick() {
         signIn().then(user => {
-            console.log(user.getBasicProfile().getId());
+            // console.log(user.getBasicProfile().getId());
             this.setState({isLoggedIn: isSignedIn()})
         })
     }
 
     handleLogOutClick() {
         signOut().then(str => {
-            console.log(str);
+            // console.log(str);
             this.setState({isLoggedIn: isSignedIn()})
         })
     }
