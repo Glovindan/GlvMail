@@ -4,6 +4,8 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button} from "react-bootstrap";
 
+import styles from "./Auth.module.css"
+
 class Auth extends React.Component {
     constructor(props) {
         super(props);
@@ -48,8 +50,9 @@ class Auth extends React.Component {
             button = <Button variant="outline-dark" onClick={this.handleLogInClick}>Sign in with Google</Button>
         }
 
+        console.log(styles.mainContainer)
         return(
-            <div>
+            <div className={styles.mainContainer}>
                 {button}
                 {/*<Button variant="outline-dark" onClick={this.handleLogInClick}>Sign in with Google</Button>*/}
                 {/*<Button variant="outline-primary" onClick={signOut}>Sign out</Button>*/}
