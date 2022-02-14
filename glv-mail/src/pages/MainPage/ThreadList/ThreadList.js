@@ -6,25 +6,25 @@ const GAPI = window.gapi;
 class ThreadList extends React.Component {
     constructor(props) {
         super(props);
-        this.messageList = props.messageList;
-        // console.log(this.messageList);
+
+        this.state = {messageList: []};
     }
 
     componentDidMount() {
-        // console.log("yep")
-        this.listItems = this.messageList.map(messageData => <ListItem key={messageData.id} messageData={messageData}/>)
+        this.setState({messageList: this.props.messageList})
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.listItems = this.messageList.map(messageData => <ListItem key={messageData.id} messageData={messageData}/>)
+        if (this.props.messageList !== prevProps.messageList) {
+            this.setState({messageList: this.props.messageList})
+        }
     }
 
     render() {
-
-
+        // let listItems = this.messageList.map(messageData => <ListItem key={messageData.id} messageData={messageData}/>)
         return (
             <ul>
-                {this.listItems}
+                {this.state.messageList.map(messageData => <ListItem key={messageData.id} messageData={messageData}/>)}
             </ul>
         )
     }

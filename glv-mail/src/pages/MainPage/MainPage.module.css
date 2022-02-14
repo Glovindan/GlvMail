@@ -1,4 +1,4 @@
-Button {
+.btn {
     width: 100%;
 }
 
@@ -6,16 +6,18 @@ Button {
     display: grid;
     grid-template-columns: 0.25fr 0.5fr 0.25fr;
     grid-template-rows: 1fr;
-    padding: 0 15px;
-    gap: 15px;
     grid-template-areas:
     "menu main rightThing";
-    background: #E5E5E5;
-    height: 100vh;
 }
 
 .rightThing {
+    background: #E5E5E5;
     grid-area: rightThing;
+    padding: 10px;
+
+    top: 0;
+    height: 100vh;
+    position: sticky;
 }
 
 .main {
@@ -24,5 +26,11 @@ Button {
 }
 
 .menu {
+    background: #E5E5E5;
     grid-area: menu;
+    padding: 10px;
+
+    top: 0;
+    height: 100vh;
+    position: sticky;
 }

@@ -1,4 +1,7 @@
-
+.paintItBlack {
+    background: black;
+    color: white;
+}
 .container {
-    border-bottom: 1px black solid;
+
 }
