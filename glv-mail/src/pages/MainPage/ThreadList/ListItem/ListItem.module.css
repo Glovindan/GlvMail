@@ -2,6 +2,71 @@
     background: black;
     color: white;
 }
-.container {
 
+.container {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12pt;
+}
+
+.from {
+    color: #5C5C5C;
+    font-weight: bold;
+}
+
+.subject {
+    font-weight: normal;
+    font-size: 18pt;
+    /*color: #5C5C5C;*/
+}
+
+.snippet {
+    font-weight: lighter;
+    color: #5C5C5C;
+}
+
+.date {
+    display: flex;
+    flex-direction: row-reverse;
+    font-weight: lighter;
+    color: #5C5C5C;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-top: #E5E5E5 solid 1px;
+    margin-top: 10px;
+}
+
+
+.subjectPlaceholder {
+    margin-top: 10px;
+    border-radius: 5px;
+    height: 18pt;
+    width: 100%;
+    background: #E5E5E5;
+}
+
+.snippetPlaceholder {
+    border-radius: 5px;
+    height: 12pt;
+    width: 100%;
+    background: #E5E5E5;
+    margin-top: 10px;
+}
+
+.bottomLinePlaceholder {
+    margin-top: 10px;
+    border-bottom: #E5E5E5 1px solid;
+}
+
+.bottomPlaceholder {
+    border-radius: 5px;
+    height: 12pt;
+    width: 100%;
+    background: #E5E5E5;
+    margin-top: 10px;
 }

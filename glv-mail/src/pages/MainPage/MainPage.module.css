@@ -8,13 +8,14 @@
     grid-template-rows: 1fr;
     grid-template-areas:
     "menu main rightThing";
+    padding: 0 10px;
+    gap: 10px;
+    background: #E5E5E5;
 }
 
 .rightThing {
-    background: #E5E5E5;
     grid-area: rightThing;
-    padding: 10px;
-
+    padding-top: 10px;
     top: 0;
     height: 100vh;
     position: sticky;
@@ -22,14 +23,12 @@
 
 .main {
     grid-area: main;
-    background: white;
+    padding-top: 10px;
 }
 
 .menu {
-    background: #E5E5E5;
     grid-area: menu;
-    padding: 10px;
-
+    padding-top: 10px;
     top: 0;
     height: 100vh;
     position: sticky;
