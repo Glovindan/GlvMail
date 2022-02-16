@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./MainPage.module.css";
 import ThreadList from "./ThreadList/ThreadList";
+import Thread from "./Thread/Thread"
 import { Button } from "react-bootstrap";
 import { isSignedIn, signOut } from "../Auth/AuthLogic";
 
@@ -31,7 +32,7 @@ class MainPage extends React.Component {
         GAPI.client.gmail.users.messages
           .list({
             userId: userId,
-            maxResults: 10,
+            maxResults: 100,
           })
           .then((someVar) => {
             this.setState({ messageList: someVar.result.messages });
@@ -43,17 +44,18 @@ class MainPage extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.menu}>
-          <div className="d-grid gap-3">
-            <Button variant="primary">Inbox</Button>
-            <Button variant="primary">Drafts</Button>
+          <div className="d-grid gap-2">
+            <Button className={styles.btn} variant="primary">Inbox</Button>
+            <Button className={styles.btn} variant="primary">Drafts</Button>
           </div>
         </div>
         <div className={styles.main}>
-          <ThreadList messageList={this.state.messageList} />
+          {/*<ThreadList messageList={this.state.messageList} />*/}
+          <Thread/>
         </div>
         <div className={styles.rightThing}>
           <div className="d-grid gap-3">
-            <Button variant="danger" onClick={this.handleLogOutClick}>
+            <Button className={styles.btn} variant="danger" onClick={this.handleLogOutClick}>
               Logout
             </Button>
           </div>
