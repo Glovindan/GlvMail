@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./ListItem.module.css";
+import {extractField, decodeEntity, b64_to_utf8, parseEmailHeader} from "./ListItemLogic";
 
 const GAPI = window.gapi;
 
@@ -15,42 +16,42 @@ class ListItem extends React.Component {
       snippet: "",
     };
 
+    this.handleMailClick = this.handleMailClick.bind(this);
     this.messageData = this.props.messageData;
   }
 
-  extractField(headersArr, fieldName) {
-    return headersArr.find((header) => header.name === fieldName).value;
+
+  handleMailClick() {
+    console.log(this.messageData.id);
   }
 
-  decodeEntity(inputStr) {
-    let textarea = document.createElement("textarea");
-    textarea.innerHTML = inputStr;
-    return textarea.value;
-  }
   componentDidMount() {
-    const userId = GAPI.auth2.getAuthInstance().currentUser.get().getId();
+    // const userId = GAPI.auth2.getAuthInstance().currentUser.get().getId();
 
     GAPI.client.gmail.users.messages
-      .get({ userId: userId, id: this.messageData.id })
+      .get({ userId: "me", id: this.messageData.id })
       .then((response) => {
         const result = response.result;
         const headers = result.payload.headers;
 
-        const from = this.extractField(headers, "From");
-        const date = this.extractField(headers, "Date");
-        const subject = this.extractField(headers, "Subject");
+        //
+        // if(this.messageData.id === "17f07cde34ffaed0") {
+        //   console.log(result)
+        //   // const base = result.payload.parts[0].parts[1].body.data;
+        //   // console.log(b64_to_utf8(base))
+        // };
 
-        const fromSplit = from.split(" <");
-
-        fromSplit[0] = fromSplit[0].replace(/"/g, "");
-        fromSplit[1] = fromSplit[1].replace(/>/g, "");
+        const from = extractField(headers, "From");
+        const fromParsed = parseEmailHeader(from);
+        const date = extractField(headers, "Date");
+        const subject = extractField(headers, "Subject");
 
         this.setState({
           isLoaded: true,
-          from: fromSplit[0],
+          from: fromParsed.name,
           subject: subject,
           date: new Date(date).toLocaleString(),
-          snippet: this.decodeEntity(result.snippet),
+          snippet: decodeEntity(result.snippet),
         });
       }); //Список сообщений
   }
@@ -76,7 +77,7 @@ class ListItem extends React.Component {
       </div>
     );
     return (
-      <li className={styles.container}>
+      <li className={styles.container} onClick={this.handleMailClick}>
         {this.state.isLoaded ? loaded : placeholder}
       </li>
     );

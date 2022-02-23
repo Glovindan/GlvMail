@@ -27,15 +27,14 @@ class MainPage extends React.Component {
     GAPI.client
       .load("https://gmail.googleapis.com/$discovery/rest?version=v1")
       .then(() => {
-        const userId = GAPI.auth2.getAuthInstance().currentUser.get().getId(); //Достать id юзера
-
         GAPI.client.gmail.users.messages
           .list({
-            userId: userId,
-            maxResults: 100,
+            userId: "me",
+            maxResults: 20
           })
           .then((someVar) => {
             this.setState({ messageList: someVar.result.messages });
+              console.log(someVar.result.nextPageToken);
           }); //Список сообщений
       });
   }
@@ -50,8 +49,8 @@ class MainPage extends React.Component {
           </div>
         </div>
         <div className={styles.main}>
-          {/*<ThreadList messageList={this.state.messageList} />*/}
-          <Thread/>
+          {/*<Thread/>*/}
+          <ThreadList messageList={this.state.messageList} />
         </div>
         <div className={styles.rightThing}>
           <div className="d-grid gap-3">

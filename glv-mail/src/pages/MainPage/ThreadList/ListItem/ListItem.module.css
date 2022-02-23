@@ -28,6 +28,7 @@
 .subject {
     font-weight: normal;
     font-size: 18pt;
+    overflow: hidden;
     /*color: #5C5C5C;*/
 }
 
