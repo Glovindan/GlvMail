@@ -4,6 +4,7 @@ import ThreadList from "./ThreadList/ThreadList";
 import Thread from "./Thread/Thread"
 import { Button } from "react-bootstrap";
 import { isSignedIn, signOut } from "../Auth/AuthLogic";
+import {html} from "./Thread/wtf";
 
 const GAPI = window.gapi;
 
@@ -49,8 +50,9 @@ class MainPage extends React.Component {
           </div>
         </div>
         <div className={styles.main}>
-          {/*<Thread/>*/}
-          <ThreadList messageList={this.state.messageList} />
+          <Thread/>
+          {/*<ThreadList messageList={this.state.messageList} />*/}
+
         </div>
         <div className={styles.rightThing}>
           <div className="d-grid gap-3">

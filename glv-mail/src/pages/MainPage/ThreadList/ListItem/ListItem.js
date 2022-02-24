@@ -34,7 +34,8 @@ class ListItem extends React.Component {
         const result = response.result;
         const headers = result.payload.headers;
 
-        //
+        console.log(result);
+
         // if(this.messageData.id === "17f07cde34ffaed0") {
         //   console.log(result)
         //   // const base = result.payload.parts[0].parts[1].body.data;

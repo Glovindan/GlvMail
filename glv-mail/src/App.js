@@ -4,6 +4,7 @@ import React from "react";
 import MainPage from "./pages/MainPage/MainPage";
 import { isSignedIn, loadAPI } from "./pages/Auth/AuthLogic";
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
