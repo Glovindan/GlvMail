@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ListItem.module.css";
-import {extractField, decodeEntity, b64_to_utf8, parseEmailHeader} from "./ListItemLogic";
+import {extractField, decodeEntity, parseEmailHeader} from "./ListItemLogic";
 
 const GAPI = window.gapi;
 
@@ -20,27 +20,26 @@ class ListItem extends React.Component {
     this.messageData = this.props.messageData;
   }
 
-
   handleMailClick() {
-    console.log(this.messageData.id);
+    alert(this.messageData.id);
   }
 
   componentDidMount() {
     // const userId = GAPI.auth2.getAuthInstance().currentUser.get().getId();
 
     GAPI.client.gmail.users.messages
-      .get({ userId: "me", id: this.messageData.id })
+      .get({
+        userId: "me",
+        id: this.messageData.id,
+        format: 'metadata',
+        metadataHeaders:["From","Date","Subject"]
+      })
       .then((response) => {
         const result = response.result;
         const headers = result.payload.headers;
 
-        console.log(result);
-
-        // if(this.messageData.id === "17f07cde34ffaed0") {
-        //   console.log(result)
-        //   // const base = result.payload.parts[0].parts[1].body.data;
-        //   // console.log(b64_to_utf8(base))
-        // };
+        // console.log(result);
+        // console.log(headers);
 
         const from = extractField(headers, "From");
         const fromParsed = parseEmailHeader(from);

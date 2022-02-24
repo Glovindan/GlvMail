@@ -3,6 +3,9 @@ import Auth from "./pages/Auth/Auth";
 import React from "react";
 import MainPage from "./pages/MainPage/MainPage";
 import { isSignedIn, loadAPI } from "./pages/Auth/AuthLogic";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Thread from "./pages/MainPage/Thread/Thread";
+import ThreadList from "./pages/MainPage/ThreadList/ThreadList";
 
 
 class App extends React.Component {
@@ -26,7 +29,6 @@ class App extends React.Component {
 
   handleLogInStatus(isLoggedIn) {
     this.setState({ isLoggedIn: isLoggedIn });
-    console.log(this.state.isLoggedIn);
   }
 
   render() {

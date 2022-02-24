@@ -8,11 +8,6 @@ const decodeEntity = (inputStr) => {
   return textarea.value;
 }
 
-const b64_to_utf8 = (str) => {
-  str = str.replace(/-/g, '+').replace(/_/g, '/');
-  return decodeURIComponent(escape(atob(str)));
-}
-
 const parseEmailHeader = (fromStr) => {
   const email = fromStr.match(/[^@<\s]+@[^@>\s]+/g).join('');
   const name = fromStr.replace(/[^@<\s]+@[^@>\s]+/g,"").replace(/["<>]/g,"").trim();
@@ -30,4 +25,4 @@ const parseEmailHeader = (fromStr) => {
   };
 }
 
-export {decodeEntity, extractField, b64_to_utf8, parseEmailHeader};
+export {decodeEntity, extractField, parseEmailHeader};

@@ -15,7 +15,10 @@ class MainPage extends React.Component {
     this.handleLogOutClick = this.handleLogOutClick.bind(this);
     this.onLogInStatusChange = props.onLogInStatusChange;
 
-    this.state = { messageList: [] };
+    this.state = {
+      isLoaded : false,
+      messageList: []
+    };
   }
 
   handleLogOutClick() {
@@ -28,14 +31,19 @@ class MainPage extends React.Component {
     GAPI.client
       .load("https://gmail.googleapis.com/$discovery/rest?version=v1")
       .then(() => {
+        this.setState({
+          isLoaded : true
+        });
         GAPI.client.gmail.users.messages
           .list({
             userId: "me",
             maxResults: 20
           })
-          .then((someVar) => {
-            this.setState({ messageList: someVar.result.messages });
-              console.log(someVar.result.nextPageToken);
+          .then((response) => {
+            this.setState({
+              messageList: response.result.messages
+            });
+            console.log(response.result.nextPageToken);//Показывает токен следующей страницы
           }); //Список сообщений
       });
   }
@@ -49,11 +57,12 @@ class MainPage extends React.Component {
             <Button className={styles.btn} variant="primary">Drafts</Button>
           </div>
         </div>
-        <div className={styles.main}>
-          <Thread/>
-          {/*<ThreadList messageList={this.state.messageList} />*/}
 
+        <div className={styles.main}>
+          {this.state.isLoaded ? <Thread/> : null}
+          <ThreadList messageList={this.state.messageList} />
         </div>
+
         <div className={styles.rightThing}>
           <div className="d-grid gap-3">
             <Button className={styles.btn} variant="danger" onClick={this.handleLogOutClick}>
