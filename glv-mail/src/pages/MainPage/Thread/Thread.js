@@ -23,17 +23,15 @@ class Thread extends React.Component {
     this.messageData = this.props.messageData; // Брать из пропсов
   }
 
-  componentDidMount() {
-    getMessageData(this.messageData.id).then((response) => {
+  async componentDidMount() {
+    getMessageData(this.messageData.id).then(async (response) => {
       const result = response.result;
       const headers = result.payload.headers;
-
-      console.log(result);
 
       const from = parseEmailHeader(extractField(headers, "From"));
       const date = extractField(headers, "Date");
       const subject = extractField(headers, "Subject");
-      const body = parseEmailBody(result.payload, this.messageData.id);
+      const body = await parseEmailBody(result.payload, this.messageData.id);
 
       this.setState({
         isLoaded: true,

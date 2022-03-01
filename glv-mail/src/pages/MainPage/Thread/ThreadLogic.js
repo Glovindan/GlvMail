@@ -13,42 +13,41 @@ const convertBase64 = (str) => {
   return decodeURIComponent(escape(atob(str)));
 };
 
-const parseEmailBody = (payload, messageId) => {
+const parseEmailBody = async (payload, messageId) => {
   //Что-то мне подсказывает что это ГИГАНТСКИЙ КОСТЫЛЬ
   if (payload.mimeType === "multipart/related") {
     //parse html
-    const data = payload.parts.find((el) => el.mimeType === "text/html").body.data;
+    const data = payload.parts.find((el) => el.mimeType === "text/html").body
+      .data;
     let body = convertBase64(data);
 
     //parse attachments
     const attachmentsData = payload.parts
       .filter((el) => /image\//.test(el.mimeType))
       .map((el) => {
-        return {attachmentId: el.body.attachmentId, contentID: extractField(el.headers, "Content-ID")}
+        return {
+          id: el.body.attachmentId,
+          cid: extractField(el.headers, "Content-ID").replace(/[<>]/g, ""),
+          type: el.mimeType,
+        };
       });
-    console.log(attachmentsData);
 
-    let attachments = [];
-
-    attachmentsData.forEach((attachmentData) => {
-      getAttachment(messageId, attachmentData.attachmentId).then((response) => {
-        const attachmentData = replaceGmailBase64(response.data);
-        const contentID = attachmentsData.contentID.replace(/[<>]/, "");
-        attachments.push({
-          attachmentData: attachmentData,
-          contentID: contentID,
-        });
-        console.log(attachments);
-      });
+    const attachments = await getFullAttachmentsData(
+      attachmentsData,
+      messageId
+    );
+    attachments.forEach((attachment) => {
+      body = body.replace(
+        `cid:${attachment.cid}`,
+        `data:${attachment.type};base64, ${attachment.data}`
+      );
     });
-
-    console.log(attachments);
-    console.log(body.match(/cid:[\d]+/g));
     return body;
   }
 
-  if(payload.mimeType === "multipart/alternative") {
-    const data = payload.parts.find((el) => el.mimeType === "text/html").body.data;
+  if (payload.mimeType === "multipart/alternative") {
+    const data = payload.parts.find((el) => el.mimeType === "text/html").body
+      .data;
     return convertBase64(data);
   }
 
@@ -56,7 +55,22 @@ const parseEmailBody = (payload, messageId) => {
   return convertBase64(data);
 };
 
-const getAttachment = (messageId, attachmentId) => {
+const getFullAttachmentsData = async (attachmentsData, messageId) => {
+  const result = await Promise.all(
+    attachmentsData.map(async (attachment) => {
+      const data = await getAttachment(attachment.id, messageId);
+      return {
+        data: replaceGmailBase64(data.result.data),
+        cid: attachment.cid,
+        type: attachment.type,
+      };
+    })
+  );
+
+  return result;
+};
+
+const getAttachment = (attachmentId, messageId) => {
   return new Promise((resolve) => {
     resolve(
       GAPI.client.gmail.users.messages.attachments.get({

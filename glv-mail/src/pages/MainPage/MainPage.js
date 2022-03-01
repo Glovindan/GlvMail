@@ -59,7 +59,7 @@ class MainPage extends React.Component {
         </div>
 
         <div className={styles.main}>
-          {this.state.isLoaded ? <Thread messageData={{id: '17f35a99b27d7d23', threadId: '17f2598374fe681b'}}/> : null}
+          {this.state.isLoaded ? <Thread messageData={{id: '17f44c06724f6f10', threadId: '17f2598374fe681b'}}/> : null}
           <ThreadList messageList={this.state.messageList} />
         </div>
 
