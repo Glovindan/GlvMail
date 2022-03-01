@@ -1,5 +1,5 @@
 const extractField = (headersArr, fieldName)  =>{
-  return headersArr.find((header) => header.name === fieldName).value;
+  return headersArr.find((header) => header.name.toLowerCase() === fieldName.toLowerCase()).value;
 }
 
 const decodeEntity = (inputStr) => {

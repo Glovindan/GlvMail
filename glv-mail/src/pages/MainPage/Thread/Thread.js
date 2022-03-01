@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./Thread.module.css";
 import {Button} from "react-bootstrap";
-import {html, html1} from "./wtf";
-import {decodeEntity, extractField, parseEmailHeader} from "../ThreadList/ListItem/ListItemLogic";
+import {extractField, parseEmailHeader} from "../ThreadList/ListItem/ListItemLogic";
 import {parseEmailBody} from "./ThreadLogic";
 const GAPI = window.gapi;
 
@@ -19,7 +18,7 @@ class Thread extends React.Component {
       snippet: "",
     };
 
-    this.messageData = {id: '17f2b5852002d392', threadId: '17f2598374fe681b'}; // Брать из пропсов
+    this.messageData = {id: '17f35a99b27d7d23', threadId: '17f2598374fe681b'}; // Брать из пропсов
   }
 
   componentDidMount() {
@@ -61,8 +60,8 @@ class Thread extends React.Component {
           <div>{this.state.email}</div>
           <div>{this.state.date}</div>
         </div>
-        <div className={styles.body}>
-          <div dangerouslySetInnerHTML={{ __html: this.state.body}}/>
+        <div className={styles.body} dangerouslySetInnerHTML={{ __html: this.state.body}}>
+          {/*<div dangerouslySetInnerHTML={{ __html: this.state.body}}/>*/}
         </div>
       </div>
     );

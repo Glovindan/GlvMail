@@ -6,7 +6,7 @@
 
 .container {
     display: grid;
-    grid-template-columns: 0.25fr 0.5fr 0.25fr;
+    grid-template-columns: 0.2fr 0.6fr 0.2fr;
     grid-template-rows: 1fr;
     grid-template-areas:
     "menu main rightThing";
@@ -18,7 +18,7 @@
 .rightThing {
     grid-area: rightThing;
     padding-top: 10px;
-    padding-right: 100px;
+    /*padding-right: 100px;*/
     top: 0;
     height: 100vh;
     position: sticky;
@@ -33,7 +33,7 @@
 .menu {
     grid-area: menu;
     padding-top: 10px;
-    padding-left: 100px;
+    /*padding-left: 100px;*/
     top: 0;
     height: 100vh;
     position: sticky;
