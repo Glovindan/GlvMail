@@ -28,7 +28,7 @@
 }
 
 .body {
-    padding: 10px;
     overflow: auto;
     display: block;
+    border-radius: 5px;
 }

@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./Thread.module.css";
-import {Button} from "react-bootstrap";
-import {extractField, parseEmailHeader} from "../ThreadList/ListItem/ListItemLogic";
-import {parseEmailBody} from "./ThreadLogic";
-const GAPI = window.gapi;
+import { Button } from "react-bootstrap";
+import {
+  extractField,
+  parseEmailHeader,
+} from "../ThreadList/ListItem/ListItemLogic";
+import {parseEmailBody, getMessageData } from "./ThreadLogic";
 
 class Thread extends React.Component {
   constructor(props) {
@@ -18,41 +20,33 @@ class Thread extends React.Component {
       snippet: "",
     };
 
-    this.messageData = {id: '17f35a99b27d7d23', threadId: '17f2598374fe681b'}; // Брать из пропсов
+    this.messageData = this.props.messageData; // Брать из пропсов
   }
 
   componentDidMount() {
-    console.log(GAPI);
-    GAPI.client.gmail.users.messages
-      .get({
-        userId: "me",
-        id: this.messageData.id
-      })
-      .then((response) => {
-        const result = response.result;
-        const headers = result.payload.headers;
+    getMessageData(this.messageData.id).then((response) => {
+      const result = response.result;
+      const headers = result.payload.headers;
 
-        console.log(result);
+      console.log(result);
 
-        const from = extractField(headers, "From");
-        const fromParsed = parseEmailHeader(from);
-        const date = extractField(headers, "Date");
-        const subject = extractField(headers, "Subject");
-        const body = parseEmailBody(result.payload)
+      const from = parseEmailHeader(extractField(headers, "From"));
+      const date = extractField(headers, "Date");
+      const subject = extractField(headers, "Subject");
+      const body = parseEmailBody(result.payload, this.messageData.id);
 
-        this.setState({
-          isLoaded: true,
-          from: fromParsed.name,
-          email: fromParsed.email,
-          subject: subject,
-          date: new Date(date).toLocaleString(),
-          body: body,
-        });
-      }); //Список сообщений
+      this.setState({
+        isLoaded: true,
+        from: from.name,
+        email: from.email,
+        subject: subject,
+        date: new Date(date).toLocaleString(),
+        body: body,
+      });
+    });
   }
 
   render() {
-
     return (
       <div className={styles.container}>
         <div className={styles.header}>
@@ -60,9 +54,10 @@ class Thread extends React.Component {
           <div>{this.state.email}</div>
           <div>{this.state.date}</div>
         </div>
-        <div className={styles.body} dangerouslySetInnerHTML={{ __html: this.state.body}}>
-          {/*<div dangerouslySetInnerHTML={{ __html: this.state.body}}/>*/}
-        </div>
+        <div
+          className={styles.body}
+          dangerouslySetInnerHTML={{ __html: this.state.body }}
+        />
       </div>
     );
   }
