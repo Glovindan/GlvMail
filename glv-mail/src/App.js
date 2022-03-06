@@ -41,19 +41,17 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {/*{this.state.isLoaded ? (*/}
-        {/*  this.state.isLoggedIn ? (*/}
-        {/*    <MainPage onLogInStatusChange={this.handleLogInStatus} />*/}
-        {/*  ) : (*/}
-        {/*    <Auth onLogInStatusChange={this.handleLogInStatus} />*/}
-        {/*  )*/}
-        {/*) : (*/}
-        {/*  <div className={styles.loadingWrapper}>*/}
-        {/*    <Loading/>*/}
-        {/*  </div>*/}
-        {/*)}*/}
-
-        <Loading/>
+        {this.state.isLoaded ? (
+          this.state.isLoggedIn ? (
+            <MainPage onLogInStatusChange={this.handleLogInStatus} />
+          ) : (
+            <Auth onLogInStatusChange={this.handleLogInStatus} />
+          )
+        ) : (
+          <div className={styles.loadingWrapper}>
+            <Loading/>
+          </div>
+        )}
       </div>
     );
   }
