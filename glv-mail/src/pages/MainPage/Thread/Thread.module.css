@@ -1,5 +1,5 @@
 *, ::after, ::before{
-    box-sizing: content-box;
+    box-sizing: revert;
 }
 
 .container {
@@ -20,11 +20,8 @@
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    border-bottom: #E5E5E5 solid 1px;
+    /*border-bottom: #E5E5E5 solid 1px;*/
     padding: 10px 0;
-    top: -1px;
-    position: sticky;
-    z-index: 1;
 }
 
 .body {

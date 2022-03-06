@@ -37,7 +37,8 @@ class MainPage extends React.Component {
         GAPI.client.gmail.users.messages
           .list({
             userId: "me",
-            maxResults: 20
+            maxResults: 150,
+            pageToken: "0"
           })
           .then((response) => {
             this.setState({
@@ -59,8 +60,9 @@ class MainPage extends React.Component {
         </div>
 
         <div className={styles.main}>
-          {this.state.isLoaded ? <Thread messageData={{id: '17f44c06724f6f10', threadId: '17f2598374fe681b'}}/> : null}
+          {this.state.isLoaded ? <Thread messageData={{id: '17f289e7233775fa', threadId: '17f2598374fe681b'}}/> : null}
           <ThreadList messageList={this.state.messageList} />
+          <div className={styles.anchor}></div>
         </div>
 
         <div className={styles.rightThing}>
