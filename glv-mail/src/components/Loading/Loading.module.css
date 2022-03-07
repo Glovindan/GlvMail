@@ -9,5 +9,5 @@
 
 .loadingIcon {
     height: 50px;
-    animation: loadingIcon 1s ease infinite;
+    animation: loadingIcon 1s ease-in-out infinite;
 }

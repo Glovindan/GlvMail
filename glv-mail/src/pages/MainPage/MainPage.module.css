@@ -39,6 +39,10 @@
     position: sticky;
 }
 
-.anchor {
-    background: red;
+.loadingWrapper {
+    display: flex;
+    justify-content: center;
+    padding: 25px;
+    overflow: hidden;
+    opacity: 0.25;
 }
