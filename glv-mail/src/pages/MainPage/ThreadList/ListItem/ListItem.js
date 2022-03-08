@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./ListItem.module.css";
 import {extractField, decodeEntity, parseEmailHeader} from "./ListItemLogic";
+import { Navigate } from "react-router-dom"
 
 const GAPI = window.gapi;
 
@@ -21,7 +22,7 @@ class ListItem extends React.Component {
   }
 
   handleMailClick() {
-    alert(this.messageData.id);
+    this.setState({redirect: true});
   }
 
   componentDidMount() {
@@ -48,6 +49,7 @@ class ListItem extends React.Component {
 
         this.setState({
           isLoaded: true,
+          redirect: false,
           from: fromParsed.name,
           subject: subject,
           date: new Date(date).toLocaleString(),
@@ -76,8 +78,10 @@ class ListItem extends React.Component {
         </div>
       </div>
     );
+
     return (
       <li className={styles.container} onClick={this.handleMailClick}>
+        {this.state.redirect && (<Navigate to={`/messages/${this.props.messageData.id}`} replace={true}/>)}
         {this.state.isLoaded ? loaded : placeholder}
       </li>
     );

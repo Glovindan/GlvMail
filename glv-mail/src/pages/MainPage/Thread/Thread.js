@@ -6,12 +6,13 @@ import {
   parseEmailHeader,
 } from "../ThreadList/ListItem/ListItemLogic";
 import {parseEmailBody, getMessageData } from "./ThreadLogic";
+import {Navigate} from "react-router-dom";
 
 class Thread extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      redirect: false,
       isLoaded: false,
       from: "",
       email: "",
@@ -20,7 +21,12 @@ class Thread extends React.Component {
       snippet: "",
     };
 
-    this.messageData = this.props.messageData; // Брать из пропсов
+    this.handleBackClick = this.handleBackClick.bind(this);
+    this.messageData = {id: this.props.messageId}; // Брать из пропсов
+  }
+
+  handleBackClick() {
+    this.setState({redirect: true});
   }
 
   async componentDidMount() {
@@ -47,8 +53,9 @@ class Thread extends React.Component {
   render() {
     return (
       <div className={styles.container}>
+        {this.state.redirect && (<Navigate to={-1} replace={true}/>)}
         <div className={styles.header}>
-          <Button variant={"outline-dark"}>назад</Button>
+          <Button variant={"outline-dark"} onClick={this.handleBackClick}>назад</Button>
           <div>{this.state.email}</div>
           <div>{this.state.date}</div>
         </div>

@@ -6,6 +6,8 @@ import { Button } from "react-bootstrap";
 import { isSignedIn, signOut } from "../Auth/AuthLogic";
 import Loading from "../../components/Loading/Loading";
 import {loadClient, loadMessages} from "./MainPageLogic";
+import {Routes, Route} from "react-router-dom";
+import GetId from "../../components/GetId";
 
 const GAPI = window.gapi;
 
@@ -37,7 +39,8 @@ class MainPage extends React.Component {
       e.target.documentElement.scrollHeight -
         (e.target.documentElement.scrollTop + window.innerHeight) <
         100 &&
-      !this.state.isFetching
+      !this.state.isFetching &&
+      this.state.isLoaded
     ) {
       this.setState({ isFetching: true });
       loadMessages(this.state.nextPageToken)
@@ -56,17 +59,26 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener("scroll", this.handleScroll);
     loadClient().then(() => {
+      document.addEventListener("scroll", this.handleScroll);
+
       this.setState({
         isLoaded: true,
       });
+
       loadMessages(this.state.nextPageToken).then((response) => {
         this.setState({
           messageList: [...this.state.messageList, ...response.result.messages],
           nextPageToken: response.result.nextPageToken,
         });
       });
+    });
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("scroll", this.handleScroll);
+    this.setState({
+      isLoaded: false,
     });
   }
 
@@ -85,18 +97,17 @@ class MainPage extends React.Component {
         </div>
 
         <div className={styles.main}>
-          {this.state.isLoaded ? (
-            <Thread
-              messageData={{
-                id: "17f289e7233775fa",
-                threadId: "17f2598374fe681b",
-              }}
-            />
-          ) : null}
-          <ThreadList messageList={this.state.messageList} />
-          <div className={styles.loadingWrapper}>
-            <Loading />
-          </div>
+          <Routes>
+            <Route path={"/"} element={<div>
+              <ThreadList messageList={this.state.messageList} />
+              <div className={styles.loadingWrapper}>
+                <Loading />
+              </div>
+            </div>}/>
+            <Route path={"/:id"} element={<GetId/>}/>
+          </Routes>
+
+
         </div>
 
         <div className={styles.rightThing}>

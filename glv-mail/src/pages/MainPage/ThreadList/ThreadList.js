@@ -22,11 +22,10 @@ class ThreadList extends React.Component {
   }
 
   render() {
-    // let listItems = this.messageList.map(messageData => <ListItem key={messageData.id} messageData={messageData}/>)
     return (
       <ul className={styles.container}>
         {this.state.messageList.map((messageData) => (
-          <ListItem key={messageData.id} messageData={messageData} />
+          <ListItem key={messageData.id} messageData={messageData}/>
         ))}
       </ul>
     );

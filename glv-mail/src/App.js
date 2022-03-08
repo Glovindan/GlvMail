@@ -5,6 +5,7 @@ import MainPage from "./pages/MainPage/MainPage";
 import { isSignedIn, loadAPI } from "./pages/Auth/AuthLogic";
 import Loading from "./components/Loading/Loading";
 import styles from "./App.module.css"
+import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -37,19 +38,38 @@ class App extends React.Component {
       isLoggedIn: isLoggedIn,
     });
   }
-
+// {this.state.isLoaded ? (
+//   this.state.isLoggedIn ? (
+// <MainPage onLogInStatusChange={this.handleLogInStatus} />
+// ) : (
+//   <Auth onLogInStatusChange={this.handleLogInStatus} />
+// )
+// ) : (
+//   <div className={styles.loadingWrapper}>
+//     <Loading/>
+//   </div>
+// )}
   render() {
     return (
-      <div className="App">
+      <div>
         {this.state.isLoaded ? (
-          this.state.isLoggedIn ? (
-            <MainPage onLogInStatusChange={this.handleLogInStatus} />
-          ) : (
-            <Auth onLogInStatusChange={this.handleLogInStatus} />
-          )
+          <Routes>
+            <Route path={"/"} element={<Navigate to={"/messages"}/>}/>
+            <Route
+              path={"messages/*"}
+              element={
+              this.state.isLoggedIn ? (<MainPage onLogInStatusChange={this.handleLogInStatus} />) :
+                (<Navigate to={'/auth'}/>)
+              }
+            />
+            <Route
+              path={"auth"}
+              element={<Auth onLogInStatusChange={this.handleLogInStatus} />}
+            />
+          </Routes>
         ) : (
           <div className={styles.loadingWrapper}>
-            <Loading/>
+            <Loading />
           </div>
         )}
       </div>
