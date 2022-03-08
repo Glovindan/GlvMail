@@ -1,13 +1,14 @@
 import React from "react";
 import styles from "./MainPage.module.css";
 import ThreadList from "./ThreadList/ThreadList";
-import Thread from "./Thread/Thread"
+import Thread from "./Thread/Thread";
 import { Button } from "react-bootstrap";
 import { isSignedIn, signOut } from "../Auth/AuthLogic";
 import Loading from "../../components/Loading/Loading";
-import {loadClient, loadMessages} from "./MainPageLogic";
-import {Routes, Route} from "react-router-dom";
+import { loadClient, loadMessages } from "./MainPageLogic";
+import { Routes, Route } from "react-router-dom";
 import GetId from "../../components/GetId";
+import CreateMessage from "./CreateMessage/CreateMessage";
 
 const GAPI = window.gapi;
 
@@ -86,39 +87,43 @@ class MainPage extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.menu}>
-          <div className="d-grid gap-2">
-            <Button className={styles.btn} variant="primary">
-              Inbox
-            </Button>
-            <Button className={styles.btn} variant="primary">
-              Drafts
-            </Button>
-          </div>
+          <Button className={styles.btn} variant="primary">
+            Inbox
+          </Button>
+          <Button className={styles.btn} variant="primary">
+            Drafts
+          </Button>
+          <Button
+            className={styles.btn}
+            variant="danger"
+            onClick={this.handleLogOutClick}
+          >
+            Logout
+          </Button>
         </div>
 
         <div className={styles.main}>
           <Routes>
-            <Route path={"/"} element={<div>
-              <ThreadList messageList={this.state.messageList} />
-              <div className={styles.loadingWrapper}>
-                <Loading />
-              </div>
-            </div>}/>
-            <Route path={"/:id"} element={<GetId/>}/>
+            <Route
+              path={"/"}
+              element={
+                <div>
+                  <ThreadList messageList={this.state.messageList} />
+                  <div className={styles.loadingWrapper}>
+                    <Loading />
+                  </div>
+                </div>
+              }
+            />
+            <Route path={"/:id"} element={<GetId />} />
           </Routes>
-
-
         </div>
 
         <div className={styles.rightThing}>
           <div className="d-grid gap-3">
-            <Button
-              className={styles.btn}
-              variant="danger"
-              onClick={this.handleLogOutClick}
-            >
-              Logout
-            </Button>
+            {
+              this.state.isLoaded ? <CreateMessage /> :<div className={styles.loadingWrapper}><Loading/></div>
+            }
           </div>
         </div>
       </div>

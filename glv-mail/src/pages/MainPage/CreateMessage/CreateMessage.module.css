@@ -1,0 +1,28 @@
+.container {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12pt;
+    overflow: hidden;
+
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 2px 0px rgba(34, 60, 80, 0.2);
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container input,textarea {
+    border: none;
+    background: #E5E5E5;
+
+    -webkit-box-shadow: inset 0px 0px 2px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: inset  0px 0px 2px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: inset 0px 0px 2px 0px rgba(34, 60, 80, 0.2);
+}
+
+.container h6 {
+    text-align: center;
+}
