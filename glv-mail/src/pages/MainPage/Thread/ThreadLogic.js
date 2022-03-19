@@ -15,12 +15,13 @@ const convertBase64 = (str) => {
 
 const parseEmailBody = async (payload, messageId) => {
   //Что-то мне подсказывает что это ГИГАНТСКИЙ КОСТЫЛЬ
+  console.log(payload)
   if (payload.mimeType === "multipart/related") {
     //parse html
     const data = payload.parts.find((el) => el.mimeType === "text/html").body
       .data;
     let body = convertBase64(data);
-
+    console.log(body)
     //parse attachments
     const attachmentsData = payload.parts
       .filter((el) => /image\//.test(el.mimeType))
@@ -50,6 +51,15 @@ const parseEmailBody = async (payload, messageId) => {
       .data;
     return convertBase64(data);
   }
+
+  //TODO: Сделать отображение прикреплений
+  if (payload.mimeType === "multipart/mixed") {
+    const data = payload.parts.find((el) => el.mimeType === "text/html").body
+      .data;
+
+    return convertBase64(data);
+  }
+  //TODO: Добавить поддержку остальных MIME типов
 
   const data = payload.body.data;
   return convertBase64(data);

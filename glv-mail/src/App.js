@@ -38,17 +38,7 @@ class App extends React.Component {
       isLoggedIn: isLoggedIn,
     });
   }
-// {this.state.isLoaded ? (
-//   this.state.isLoggedIn ? (
-// <MainPage onLogInStatusChange={this.handleLogInStatus} />
-// ) : (
-//   <Auth onLogInStatusChange={this.handleLogInStatus} />
-// )
-// ) : (
-//   <div className={styles.loadingWrapper}>
-//     <Loading/>
-//   </div>
-// )}
+
   render() {
     return (
       <div>

@@ -3,10 +3,6 @@ const SCOPES = 'https://mail.google.com';
 const GAPI = window.gapi;
 
 const loadAPI = async () => {
-    //1. Загрузить библиотеки gapi.client и gapi.auth2
-    //2. Инициализировать библиотеку gapi.client
-    //3. ???
-    //4. PROFIT
     return new Promise((res, rej) => {
         GAPI.load('client:auth2', () => {
             GAPI.client.init( {
